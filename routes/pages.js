@@ -30,8 +30,9 @@ router.get('/footer', async (req, res) => {
       if (!req.app.locals.db) {
         return res.status(500).json({ error: 'Database connection not available' });
       }
-      const [rows] = await req.app.locals.db.query('SELECT * FROM footer');
-      res.json(rows); 
+      // const [rows] = await req.app.locals.db.query('SELECT * FROM footer');
+      const rows = req.app.locals.db.prepare('SELECT * FROM footer');
+      res.json(rows.all()); 
     } catch (error) {
       console.error('Error fetching pages:', error);
       res.status(500).json({ error: 'Failed to fetch footer data' })
@@ -44,8 +45,9 @@ router.get('/home', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM home_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM home_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM home_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM home_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -58,8 +60,9 @@ router.get('/homeschooling', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM homeschooling_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM homeschooling_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM homeschooling_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM homeschooling_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -72,8 +75,9 @@ router.get('/one-on-one', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM one_on_one_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM one_on_one_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM one_on_one_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM one_on_one_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -86,8 +90,9 @@ router.get('/combined-classes', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM combined_classes_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM combined_classes_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM combined_classes_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM combined_classes_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -100,8 +105,9 @@ router.get('/standardized-test-prep', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM standardized_test_prep_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM standardized_test_prep_page');    
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM standardized_test_prep_page');    
+    const rows = req.app.locals.db.prepare('SELECT * FROM standardized_test_prep_page');    
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -114,8 +120,9 @@ router.get('/study-coaching', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM study-coaching_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM study_coaching_page');    
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM study_coaching_page');    
+    const rows = req.app.locals.db.prepare('SELECT * FROM study_coaching_page');    
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -128,8 +135,9 @@ router.get('/student-activities', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM student_clubs_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM student_clubs_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM student_clubs_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM student_clubs_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -142,8 +150,9 @@ router.get('/academic-resources', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources_page');    
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources_page');    
+    const rows = req.app.locals.db.prepare('SELECT * FROM academic_resources_page');    
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -156,8 +165,9 @@ router.get('/learn-languages', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM learn_languages_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM learn_languages_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM learn_languages_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM learn_languages_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -170,8 +180,9 @@ router.get('/our-staff', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM our_staff_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM our_staff_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM our_staff_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM our_staff_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -182,8 +193,9 @@ router.get('/our-staff', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM faqs_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM faqs_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM faqs_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM faqs_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -196,8 +208,9 @@ router.get('/pricing', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM pricing_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM pricing_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM pricing_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM pricing_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -210,8 +223,9 @@ router.get('/get-in-touch', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM get_in_touch_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM get_in_touch_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM get_in_touch_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM get_in_touch_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -224,8 +238,9 @@ router.get('/educational-services', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     // const [rows] = await req.app.locals.db.query('SELECT * FROM educational_services_page ORDER BY title');
-    const [rows] = await req.app.locals.db.query('SELECT * FROM educational_services_page');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM educational_services_page');
+    const rows = req.app.locals.db.prepare('SELECT * FROM educational_services_page');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });

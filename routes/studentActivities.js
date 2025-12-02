@@ -10,8 +10,10 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM student_activities ORDER BY name');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM student_activities ORDER BY name');
+    const rows = req.app.locals.db.prepare('SELECT * FROM student_activities ORDER BY name');
+
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching student activities:', error);
     res.status(500).json({ error: 'Failed to fetch student activities' });
@@ -25,13 +27,15 @@ router.get('/:id', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM student_activities WHERE id = ?', [req.params.id]);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM student_activities WHERE id = ?', [req.params.id]);
+    const rows = req.app.locals.db.query('SELECT * FROM student_activities WHERE id = ?');
+
     
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Student activity not found' });
     }
     
-    res.json(rows[0]);
+    res.json(rows.get(req.params.id));
   } catch (error) {
     console.error('Error fetching student activity:', error);
     res.status(500).json({ error: 'Failed to fetch student activity' });

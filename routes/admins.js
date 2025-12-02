@@ -12,8 +12,10 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM admins');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM admins');
+    const rows = req.app.locals.db.prepare('SELECT * FROM admins');
+
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching admins:', error);
     res.status(500).json({ error: 'Failed to fetch admins' });
@@ -27,11 +29,13 @@ router.get('/:id', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM admins WHERE id = ?', [req.params.id]);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM admins WHERE id = ?', [req.params.id]);
+    const rows = req.app.locals.db.prepare('SELECT * FROM admins WHERE id = ?');
+
     if (rows.length === 0) {
       return res.status(404).json({ error: 'admin not found' });
     }
-    res.json(rows[0]);
+    res.json(rows.get(req.params.id));
   } catch (error) {
     console.error('Error fetching admin:', error);
     res.status(500).json({ error: 'Failed to fetch admin' });

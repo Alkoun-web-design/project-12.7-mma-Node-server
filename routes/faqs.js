@@ -10,8 +10,9 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM faqs ORDER BY category, question');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM faqs ORDER BY category, question');
+    const rows = req.app.locals.db.prepare('SELECT * FROM faqs ORDER BY category, question');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching FAQs:', error);
     res.status(500).json({ error: 'Failed to fetch FAQs' });
@@ -25,8 +26,9 @@ router.get('/category/:category', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM faqs WHERE category = ? ORDER BY question', [req.params.category]);
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM faqs WHERE category = ? ORDER BY question', [req.params.category]);
+    const rows = req.app.locals.db.prepare('SELECT * FROM faqs WHERE category = ? ORDER BY question');
+    res.json(rows.get(req.params.category));
   } catch (error) {
     console.error('Error fetching FAQs by category:', error);
     res.status(500).json({ error: 'Failed to fetch FAQs by category' });

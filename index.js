@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
+import sqlite3 from "sqlite3";
 import session from 'express-session';
 // import { createClient } from 'redis';
 // import { RedisStore } from 'connect-redis';
@@ -91,16 +92,19 @@ app.use((req, res, next) => {
 })
 
 // SQL Database connection
-const db = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'mma1',
-  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+// const db = mysql.createPool({
+//   host: process.env.DB_HOST || 'localhost',
+//   user: process.env.DB_USER || 'root',
+//   password: process.env.DB_PASSWORD || '',
+//   database: process.env.DB_NAME || 'mma1',
+//   port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
+//   waitForConnections: true,
+//   connectionLimit: 10,
+//   queueLimit: 0,
+// });
+
+// SQLite Database connection
+const db = new sqlite3.Database('../new-db.db');
 
 app.locals.db = db;
 

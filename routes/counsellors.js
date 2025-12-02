@@ -12,8 +12,10 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM counsellors');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM counsellors');
+    const rows = req.app.locals.db.prepare('SELECT * FROM counsellors');
+
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching counsellor:', error);
     res.status(500).json({ error: 'Failed to fetch counsellors' });
@@ -27,11 +29,12 @@ router.get('/:id', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM counsellors WHERE id = ?', [req.params.id]);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM counsellors WHERE id = ?', [req.params.id]);
+    const rows = req.app.locals.db.prepare('SELECT * FROM counsellors WHERE id = ?');
     if (rows.length === 0) {
       return res.status(404).json({ error: 'counsellor not found' });
     }
-    res.json(rows[0]);
+    res.json(rows.get(req.params.id));
   } catch (error) {
     console.error('Error fetching counsellor:', error);
     res.status(500).json({ error: 'Failed to fetch counsellor' });

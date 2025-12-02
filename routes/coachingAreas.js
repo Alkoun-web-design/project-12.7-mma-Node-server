@@ -7,10 +7,13 @@ const router = express.Router();
  */
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await req.app.locals.db.query(
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT * FROM coaching_areas ORDER BY title ASC'
+    // );
+    const rows = req.app.locals.db.prepare(
       'SELECT * FROM coaching_areas ORDER BY title ASC'
     );
-    res.json(rows);
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching coaching areas:', error);
     res.status(500).json({ error: 'Failed to fetch coaching areas' });
@@ -22,16 +25,20 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
   try {
-    const [rows] = await req.app.locals.db.query(
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT * FROM coaching_areas WHERE id = $1',
+    //   [req.params.id]
+    // );
+
+    const rows = req.app.locals.db.prepare(
       'SELECT * FROM coaching_areas WHERE id = $1',
-      [req.params.id]
     );
     
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Coaching area not found' });
     }
     
-    res.json(rows[0]);
+    res.json(rows.get(req.params.id));
   } catch (error) {
     console.error('Error fetching coaching area:', error);
     res.status(500).json({ error: 'Failed to fetch coaching area' });
@@ -53,14 +60,21 @@ router.post('/', async (req, res) => {
   }
   
   try {
-    const [rows] = await req.app.locals.db.query(
+    // const [rows] = await req.app.locals.db.query(
+    //   `INSERT INTO coaching_areas (title, description, benefits, logo)
+    //    VALUES ($1, $2, $3, $4)
+    //    RETURNING *`,
+    //   [title, description, JSON.stringify(benefits), logo]
+    // );
+
+    const rows = req.app.locals.db.prepare(
       `INSERT INTO coaching_areas (title, description, benefits, logo)
        VALUES ($1, $2, $3, $4)
        RETURNING *`,
-      [title, description, JSON.stringify(benefits), logo]
     );
     
-    res.status(201).json(rows[0]);
+    // res.status(201).json(rows[0]);
+    res.status(201).json(rows.get(title, description, JSON.stringify(benefits), logo));
   } catch (error) {
     console.error('Error creating coaching area:', error);
     res.status(500).json({ error: 'Failed to create coaching area' });

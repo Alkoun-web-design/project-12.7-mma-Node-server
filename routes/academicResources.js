@@ -4,13 +4,15 @@ const router = express.Router();
 // Get all academic resources
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources');
+  const rows = req.app.locals.db.prepare('SELECT * FROM academic_resources');
     // Ensure features are parsed as JSON if they're stored as strings
     const processedRows = rows.map(row => ({
       ...row,
       features: typeof row.features === 'string' ? JSON.parse(row.features) : row.features
     }));
-    res.json(processedRows);
+    // res.json(processedRows);
+    res.json(processedRows.all());
   } catch (error) {
     console.error('Error fetching academic resources:', error);
     res.status(500).json({ error: 'Failed to fetch academic resources' });
@@ -20,11 +22,14 @@ router.get('/', async (req, res) => {
 // Get a single academic resource by ID
 router.get('/:id', async (req, res) => {
   try {
-    const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources WHERE id = ?', [req.params.id]);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources WHERE id = ?', [req.params.id]);
+    const rows = req.app.locals.db.prepare('SELECT * FROM academic_resources WHERE id = ?');
+
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Resource not found' });
     }
-    res.json(rows[0]);
+    // res.json(rows[0]);
+    res.json(rows.get(req.params.id));
   } catch (error) {
     console.error('Error fetching academic resource:', error);
     res.status(500).json({ error: 'Failed to fetch academic resource' });

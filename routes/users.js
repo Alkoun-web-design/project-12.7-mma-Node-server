@@ -11,8 +11,10 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT id, email, user_type FROM users');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT id, email, user_type FROM users');
+    const rows = req.app.locals.db.prepare('SELECT id, email, user_type FROM users');
+
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching user:', error);
     res.status(500).json({ error: 'Failed to fetch users' });
@@ -28,11 +30,12 @@ router.get('/:id', async (req, res) => {
 
     const { id } = req.params;
     
-    const [rows] = await req.app.locals.db.query('SELECT id, email, user_type FROM users WHERE id = ?', [id]);
+    // const [rows] = await req.app.locals.db.query('SELECT id, email, user_type FROM users WHERE id = ?', [id]);
+    const rows = req.app.locals.db.prepare('SELECT id, email, user_type FROM users WHERE id = ?');
     if (rows.length === 0) {
       return res.status(404).json({ error: 'user not found' });
     }
-    res.json(rows[0]);
+    res.json(rows.get(id));
   } catch (error) {
     console.error('Error fetching user:', error);
     res.status(500).json({ error: 'Failed to fetch user' });

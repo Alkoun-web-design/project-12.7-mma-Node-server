@@ -10,8 +10,9 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM languages ORDER BY name');
-    res.json(rows);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM languages ORDER BY name');
+    const rows = req.app.locals.db.prepare('SELECT * FROM languages ORDER BY name');
+    res.json(rows.all());
   } catch (error) {
     console.error('Error fetching languages:', error);
     res.status(500).json({ error: 'Failed to fetch languages' });
@@ -25,13 +26,15 @@ router.get('/:id', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    const [rows] = await req.app.locals.db.query('SELECT * FROM languages WHERE id = ?', [req.params.id]);
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM languages WHERE id = ?', [req.params.id]);
+    const rows = req.app.locals.db.prepare('SELECT * FROM languages WHERE id = ?');
+
     
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Language not found' });
     }
     
-    res.json(rows[0]);
+    res.json(rows.get(req.params.id));
   } catch (error) {
     console.error('Error fetching language:', error);
     res.status(500).json({ error: 'Failed to fetch language' });
