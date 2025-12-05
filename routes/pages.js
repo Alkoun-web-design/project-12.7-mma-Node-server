@@ -47,7 +47,8 @@ router.get('/home', async (req, res) => {
     // const [rows] = await req.app.locals.db.query('SELECT * FROM home_page ORDER BY title');
     // const [rows] = await req.app.locals.db.query('SELECT * FROM home_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM home_page');
-    res.json(rows.all());
+    const data = rows.all();
+    res.json(data);
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });
@@ -167,7 +168,9 @@ router.get('/learn-languages', async (req, res) => {
     // const [rows] = await req.app.locals.db.query('SELECT * FROM learn_languages_page ORDER BY title');
     // const [rows] = await req.app.locals.db.query('SELECT * FROM learn_languages_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM learn_languages_page');
-    res.json(rows.all());
+    const data = rows.all();
+    // console.log(data);
+    res.json(data);
   } catch (error) {
     console.error('Error fetching pages:', error);
     res.status(500).json({ error: 'Failed to fetch pages' });

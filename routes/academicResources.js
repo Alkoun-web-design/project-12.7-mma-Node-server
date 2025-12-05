@@ -12,7 +12,8 @@ router.get('/', async (req, res) => {
       features: typeof row.features === 'string' ? JSON.parse(row.features) : row.features
     }));
     // res.json(processedRows);
-    res.json(processedRows.all());
+    const data = processedRows.all() 
+    res.json(data);
   } catch (error) {
     console.error('Error fetching academic resources:', error);
     res.status(500).json({ error: 'Failed to fetch academic resources' });

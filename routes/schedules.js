@@ -12,8 +12,8 @@ router.get('/', async (req, res) => {
     
     // const [rows] = await req.app.locals.db.query('SELECT * FROM classroom_schedules ORDER BY created_at DESC');
     const rows = req.app.locals.db.prepare('SELECT * FROM classroom_schedules ORDER BY created_at DESC');
-
-    res.json(rows.all());
+    const data = rows.all();
+    res.json(data);
   } catch (error) {
     console.error('Error fetching schedules:', error);
     res.status(500).json({ error: 'Failed to fetch schedules' });

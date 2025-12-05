@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import mysql from 'mysql2/promise';
-import sqlite3 from "sqlite3";
+import 'dotenv/config'
+// import mysql from 'mysql2/promise';
+// import Database from 'better-sqlite3';
 import session from 'express-session';
+import { DatabaseSync } from 'node:sqlite';
 // import { createClient } from 'redis';
 // import { RedisStore } from 'connect-redis';
 // import MySQLStore from 'express-mysql-session';
@@ -28,12 +30,12 @@ import servicePricingRouter from './routes/servicePricing.js';
 import academicResourcesRouter from './routes/academicResources.js';
 import searchRouter from './routes/search.js';
 import crypto  from 'crypto';
-import 'dotenv/config'
+
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.SERVER_PORT || 5000;
 
 app.use('/uploads', express.static('uploads'));
 
@@ -104,14 +106,17 @@ app.use((req, res, next) => {
 // });
 
 // SQLite Database connection
-const db = new sqlite3.Database('../new-db.db');
 
-app.locals.db = db;
+// const db = new Database('./new-db.db');
+const fileDb = new DatabaseSync('./db/new-db.db');
+// db.pragma('journal_mode = WAL');
+
+app.locals.db = fileDb;
 
 // Test database connection
-db.getConnection()
-  .then(() => console.log('Connected to SQL database'))
-  .catch(err => console.error('Database connection error:', err));
+// db.getConnection()
+//   .then(() => console.log('Connected to SQL database'))
+//   .catch(err => console.error('Database connection error:', err));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

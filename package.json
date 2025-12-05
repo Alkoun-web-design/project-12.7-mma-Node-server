@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon --experimental-sqlite index.js",
+    "start": "node --experimental-sqlite index.js"
   },
   "keywords": [],
   "author": "Alkoun Web Dev",
@@ -15,6 +15,7 @@
   "description": "Node.JS web server for the Mind Muscles Academy website",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.5.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
@@ -25,7 +26,6 @@
     "mysql2": "^3.14.2",
     "nodemailer": "^7.0.5",
     "nodemon": "^3.1.10",
-    "sharp": "^0.34.3",
-    "sqlite3": "^5.1.7"
+    "sharp": "^0.34.3"
   }
 }

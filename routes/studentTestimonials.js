@@ -11,8 +11,9 @@ router.get('/', async (req, res) => {
     }
     
     // Check if success_stories column exists
-    const testimonialsQuery = await req.app.locals.db.query("SHOW COLUMNS FROM student_testimonials LIKE 'success_stories'");
-    const includeSuccessStories = testimonialsQuery[0].length > 0;
+    // const testimonialsQuery = await req.app.locals.db.query("SHOW COLUMNS FROM student_testimonials LIKE 'success_stories'");
+    const testimonialsQuery = req.app.locals.db.prepare("SHOW COLUMNS FROM student_testimonials LIKE 'success_stories'");
+    const includeSuccessStories = testimonialsQuery.length > 0;
     
     let query = 'SELECT id, student_name, testimonial, service_id';
     
@@ -23,8 +24,9 @@ router.get('/', async (req, res) => {
     
     query += ' FROM student_testimonials ORDER BY student_name';
     
-    const [rows] = await req.app.locals.db.query(query);
-    res.json(rows);
+    const rows = req.app.locals.db.prepare(query);
+    const data = rows.all();
+    res.json(data);
   } catch (error) {
     console.error('Error fetching student testimonials:', error);
     res.status(500).json({ error: 'Failed to fetch student testimonials' });
