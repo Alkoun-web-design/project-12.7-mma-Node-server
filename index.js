@@ -35,7 +35,7 @@ import crypto  from 'crypto';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 app.use('/uploads', express.static('uploads'));
 
@@ -147,9 +147,9 @@ app.use('/api/academic-resources', academicResourcesRouter);
 app.use('/api/search', searchRouter);
 
 // Start server
-app.listen(PORT, async () => {
+app.listen(port, async () => {
   // await setupTransporter();
-  console.log(`Server running on port ${PORT}`);
+  // console.log(`Server running on port ${port}`);
   
   // Log session configuration
   console.log('Session configuration:');
