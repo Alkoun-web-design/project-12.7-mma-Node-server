@@ -15,7 +15,6 @@
   "description": "Node.JS web server for the Mind Muscles Academy website",
   "dependencies": {
     "bcryptjs": "^3.0.2",
-    "better-sqlite3": "^12.5.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
