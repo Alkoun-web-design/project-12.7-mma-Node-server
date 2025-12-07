@@ -42,7 +42,7 @@ app.use('/uploads', express.static('uploads'));
 // Enable CORS with proper configuration
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || process.env.FRONTEND_ORIGIN.includes(origin)) {
+    if (!origin || process.env.FRONTEND_ORIGIN.includes(origin) || process.env.FRONTEND_DEV_ORIGIN.includes(origin)) {
       console.log('CORS request allowed for origin:', origin);
       callback(null, origin);
     } else {
