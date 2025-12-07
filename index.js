@@ -106,7 +106,6 @@ app.use((req, res, next) => {
 // });
 
 // SQLite Database connection
-
 // const db = new Database('./new-db.db');
 const fileDb = new DatabaseSync('./db/new-db.db');
 // db.pragma('journal_mode = WAL');
