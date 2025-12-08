@@ -2,9 +2,14 @@
 import express from 'express';
 const router = express.Router();
 
+/**
+ * Get all coaching areas
+ */
 router.get('/', async (req, res) => {
   try {
-
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT * FROM coaching_areas ORDER BY title ASC'
+    // );
     const rows = req.app.locals.db.prepare(
       'SELECT * FROM coaching_areas ORDER BY title ASC'
     );
@@ -15,9 +20,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-
+/**
+ * Get coaching area by ID
+ */
 router.get('/:id', async (req, res) => {
   try {
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT * FROM coaching_areas WHERE id = $1',
+    //   [req.params.id]
+    // );
 
     const rows = req.app.locals.db.prepare(
       'SELECT * FROM coaching_areas WHERE id = $1',

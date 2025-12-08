@@ -28,6 +28,7 @@ router.get('/:id', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM tutors WHERE id = ?', [req.params.id]);
     const rows = req.app.locals.db.prepare('SELECT * FROM tutors WHERE id = ?');
 
     if (rows.length === 0) {

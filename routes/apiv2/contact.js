@@ -162,5 +162,8 @@ router.post('/enquiry-form', async (req, res) => {
     }
 });
 
+// await transporter.verify();
+// console.log("Server is ready to take our messages");
+
 
 export default router;

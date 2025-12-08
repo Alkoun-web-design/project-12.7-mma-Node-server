@@ -10,10 +10,14 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
 
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT * FROM service_pricing WHERE is_active = true ORDER BY order_index'
+    // );
+
     const rows = req.app.locals.db.prepare(
       'SELECT * FROM service_pricing WHERE is_active = true ORDER BY order_index'
     );
-
+    // res.json(rows);
     res.json(rows.all());
   } catch (error) {
     console.error('Error fetching service pricing:', error);
@@ -27,6 +31,11 @@ router.get('/:id', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
+
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT * FROM service_pricing WHERE id = ?',
+    //   [req.params.id]
+    // );
 
     const rows = req.app.locals.db.prepare(
       'SELECT * FROM service_pricing WHERE id = ?',

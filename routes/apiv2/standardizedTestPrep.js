@@ -12,6 +12,9 @@ const router = express.Router();
         return res.status(500).json({ error: 'Database connection not available' });
       }
       
+      // const [rows] = await req.app.locals.db.query(
+      //   'SELECT * FROM standardized_test_prep ORDER BY created_at DESC'
+      // );
       const rows = req.app.locals.db.prepare(
         'SELECT * FROM standardized_test_prep ORDER BY created_at DESC'
       );

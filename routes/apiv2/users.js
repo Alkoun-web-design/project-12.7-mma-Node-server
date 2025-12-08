@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
+    // const [rows] = await req.app.locals.db.query('SELECT id, email, user_type FROM users');
     const rows = req.app.locals.db.prepare('SELECT id, email, user_type FROM users');
 
     res.json(rows.all());

@@ -10,8 +10,8 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM subjects ORDER BY name');
     const rows = req.app.locals.db.prepare('SELECT * FROM subjects ORDER BY name');
-    
     res.json(rows.all());
   } catch (error) {
     console.error('Error fetching subjects:', error);

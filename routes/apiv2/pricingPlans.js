@@ -10,10 +10,13 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
 
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT id, name, description, price, annual_price, annual_description, features, popular, link_to FROM pricing_plans WHERE is_active = true ORDER BY order_index'
+    // );
     const rows = req.app.locals.db.prepare(
       'SELECT id, name, description, price, annual_price, annual_description, features, popular, link_to FROM pricing_plans WHERE is_active = true ORDER BY order_index'
     );
-
+    // res.json(rows);
     res.json(rows.all());
   } catch (error) {
     console.error('Error fetching pricing plans:', error);
@@ -34,6 +37,11 @@ router.get('/:id', async (req, res) => {
     if (!id) {
       return res.status(400).json({ error: 'ID is required' });
     }
+
+    // const [rows] = await req.app.locals.db.query(
+    //   'SELECT * FROM pricing_plans WHERE id = ?',
+    //   [id]
+    // );
 
     const rows = req.app.locals.db.query(
       'SELECT * FROM pricing_plans WHERE id = ?'

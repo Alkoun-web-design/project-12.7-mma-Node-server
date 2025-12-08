@@ -10,7 +10,19 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ error: 'Database connection not available' });
     }
     
-    let query = 'SELECT * FROM student_testimonials';
+    // Check if success_stories column exists
+    // const testimonialsQuery = await req.app.locals.db.query("SHOW COLUMNS FROM student_testimonials LIKE 'success_stories'");
+    const testimonialsQuery = req.app.locals.db.prepare("SHOW COLUMNS FROM student_testimonials LIKE 'success_stories'");
+    const includeSuccessStories = testimonialsQuery.length > 0;
+    
+    let query = 'SELECT id, student_name, testimonial, service_id';
+    
+    // If success_stories column exists, include it in the query
+    if (includeSuccessStories) {
+      query += ', success_stories';
+    }
+    
+    query += ' FROM student_testimonials ORDER BY student_name';
     
     const rows = req.app.locals.db.prepare(query);
     const data = rows.all();

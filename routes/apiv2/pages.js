@@ -30,7 +30,7 @@ router.get('/footer', async (req, res) => {
       if (!req.app.locals.db) {
         return res.status(500).json({ error: 'Database connection not available' });
       }
-
+      // const [rows] = await req.app.locals.db.query('SELECT * FROM footer');
       const rows = req.app.locals.db.prepare('SELECT * FROM footer');
       res.json(rows.all()); 
     } catch (error) {
@@ -44,7 +44,8 @@ router.get('/home', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM home_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM home_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM home_page');
     const data = rows.all();
     res.json(data);
@@ -59,7 +60,8 @@ router.get('/homeschooling', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM homeschooling_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM homeschooling_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM homeschooling_page');
     res.json(rows.all());
   } catch (error) {
@@ -73,7 +75,8 @@ router.get('/one-on-one', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM one_on_one_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM one_on_one_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM one_on_one_page');
     res.json(rows.all());
   } catch (error) {
@@ -87,7 +90,8 @@ router.get('/combined-classes', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM combined_classes_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM combined_classes_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM combined_classes_page');
     res.json(rows.all());
   } catch (error) {
@@ -101,7 +105,8 @@ router.get('/standardized-test-prep', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM standardized_test_prep_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM standardized_test_prep_page');    
     const rows = req.app.locals.db.prepare('SELECT * FROM standardized_test_prep_page');    
     res.json(rows.all());
   } catch (error) {
@@ -115,7 +120,8 @@ router.get('/study-coaching', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM study-coaching_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM study_coaching_page');    
     const rows = req.app.locals.db.prepare('SELECT * FROM study_coaching_page');    
     res.json(rows.all());
   } catch (error) {
@@ -129,7 +135,8 @@ router.get('/student-activities', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM student_clubs_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM student_clubs_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM student_clubs_page');
     res.json(rows.all());
   } catch (error) {
@@ -143,7 +150,8 @@ router.get('/academic-resources', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM academic_resources_page');    
     const rows = req.app.locals.db.prepare('SELECT * FROM academic_resources_page');    
     res.json(rows.all());
   } catch (error) {
@@ -157,10 +165,11 @@ router.get('/learn-languages', async (req, res) => {
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not available' });
     }
-
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM learn_languages_page ORDER BY title');
+    // const [rows] = await req.app.locals.db.query('SELECT * FROM learn_languages_page');
     const rows = req.app.locals.db.prepare('SELECT * FROM learn_languages_page');
     const data = rows.all();
-    
+    // console.log(data);
     res.json(data);
   } catch (error) {
     console.error('Error fetching pages:', error);
